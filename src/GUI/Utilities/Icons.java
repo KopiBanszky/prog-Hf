@@ -16,7 +16,9 @@ public enum Icons {
     LOGOUT("logout"),
     DELETE_ACCOUNT("delete_account"),
     BACK("back"),
-    NULL("null");
+    NULL("null"),
+    SAVE("save"),
+    PLUS("plus");
 
     private final String name;
 

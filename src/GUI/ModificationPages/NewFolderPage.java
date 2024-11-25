@@ -96,7 +96,7 @@ public class NewFolderPage {
         }
         left.add(nameField);
 
-        JButton create = new IconButton(edit ? Icons.EDIT : Icons.ADD_FOLDER, 25);
+        JButton create = new IconButton(edit ? Icons.EDIT : Icons.SAVE, 25);
         create.addActionListener(e -> {
             if(nameField.getText().equals("") || nameField.getText().equals("Mappa neve")) {
                 JOptionPane.showMessageDialog(null,

@@ -113,7 +113,8 @@ public class ImageManager extends JPanel {
     }
 
     private JButton ImgAdder() {
-        JButton button = new IconButton(Icons.ADD_ITEM, 90);
+        JButton button = new IconButton(Icons.PLUS, 90);
+        button.setBackground(Utility.SECONDARY_BG_COLOR);
         button.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);

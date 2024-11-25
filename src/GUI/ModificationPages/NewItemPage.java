@@ -63,7 +63,7 @@ public class NewItemPage {
         if(mainPage.arguments().get("editOrNew").equals("edit")) {
             HashMap<String, Object> arguments = new HashMap<>();
             arguments.put("item", item);
-            backToParent.addActionListener(e -> mainPage.navigator("/itemPage"));
+            backToParent.addActionListener(e -> mainPage.navigator("/itemPage", arguments));
         }
         else {
             backToParent.addActionListener(e -> mainPage.navigator("/folderPage"));
@@ -185,7 +185,7 @@ public class NewItemPage {
         //endregion
 
 
-        JButton create = new IconButton(edit ? Icons.EDIT : Icons.ADD_ITEM, 25);
+        JButton create = new IconButton(edit ? Icons.EDIT : Icons.SAVE, 25);
         ImageManager finalImageManager = imageManager;
         create.addActionListener(e -> {
             if(nameField.getText().equals("") || nameField.getText().equals("Elem neve")) {

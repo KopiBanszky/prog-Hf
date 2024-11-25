@@ -8,12 +8,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AccountTest {
 
+    Account account;
+
     @BeforeEach
     void setUp() {
-    }
+        account = new Account();
+        try{
+            account.createAccount("vendeg", "vendeg");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+}
 
     @AfterEach
     void tearDown() {
+
     }
 
     @Test
@@ -22,6 +31,10 @@ class AccountTest {
 
     @Test
     void login() {
+        assertThrowsExactly(
+                Exception.class,
+                () -> account.login("vendeg", "vendeg")
+        );
     }
 
     @Test
