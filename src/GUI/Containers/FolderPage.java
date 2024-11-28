@@ -45,7 +45,6 @@ public class FolderPage {
         JPanel footer = new JPanel();
         JPanel body = buildBody();
 
-        //TODO: display accurate to permissions
 //region header
         header.setLayout(new BorderLayout());
         header.setBackground(Color.BLACK);

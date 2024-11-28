@@ -24,11 +24,10 @@ public class MainSystem {
     private Comparator<Container> comparator;
     private HashMap<String, Container> suggestions;
 
-    //TODO: accurate exceptions
     /**
      * initializes the system with the given account
      * @param account;
-     * @throws Exception;
+     * @throws Exception
      */
     public MainSystem(Account account) throws Exception {
         this.account = account;
@@ -104,7 +103,7 @@ public class MainSystem {
      * get the containers from the given parent that the account has access to
      * if the parent is null, it will return the root containers
      * @param parent;
-     * @return ArrayList<Container>;
+     * @return ArrayList&lt;Container@gt;
      */
     public ArrayList<Container> getContainers(Folder parent) {
         ArrayList<Container> result = new ArrayList<>();
@@ -117,7 +116,6 @@ public class MainSystem {
         return result;
     }
 
-    //TODO: accurate exceptions
     /**
      * open a container with the given name from the current parent
      * if the name is null or empty, it will return the current parent's children
@@ -125,8 +123,8 @@ public class MainSystem {
      * if the account is not in the container's permissions, it will throw an exception
      * if the account is in the container's permissions, it will return the children of the container
      * @param name;
-     * @return ArrayList<Container>;
-     * @throws Exception;
+     * @return ArrayList&lt;Container&gt;
+     * @throws Exception
      */
     public ArrayList<Container> openContainer(String name, String query) throws Exception {
         if(query != null && !query.isEmpty()) {
@@ -139,6 +137,7 @@ public class MainSystem {
             return result;
         }
         if(name == null || name.isEmpty()) {
+            loadSuggestions();
             return getContainers( currentParent );
         }
         if(name.equals("..")) {
@@ -164,13 +163,20 @@ public class MainSystem {
         }
         return getContainers(currentParent);
     }
-
+    /**
+     * open a container with the given name from the current parent
+     * if the name is null or empty, it will return the current parent's children
+     * if the name is "..", it will move back to the parent
+     * if the account is not in the container's permissions, it will throw an exception
+     * if the account is in the container's permissions, it will return the children of the container
+     * @param name;
+     * @throws Exception
+     */
     public ArrayList<Container> openContainer(String name) throws Exception {
         return openContainer(name, null);
     }
 
 
-    //TODO: accurate exceptions
     /**
      * open an item with the given name from the current parent
      * if the account is not in the current parent's permissions, it will throw an exception
@@ -179,7 +185,7 @@ public class MainSystem {
      * if the container is not found, it will return null
      * @param name;
      * @return Item;
-     * @throws Exception;
+     * @throws Exception
      */
     public Item openItem(String name) throws Exception {
         for(Container container : currentParent.getChildren()) {
@@ -196,7 +202,6 @@ public class MainSystem {
         throw new Exception("not found");
     }
 
-    //TODO: accurate exceptions
     /**
      * add a folder to the current parent
      * if current parent is root, the account will have edit permission
@@ -205,6 +210,7 @@ public class MainSystem {
      * @param name
      * @param permissions
      * @throws Exception
+     * @return new folder;
      */
     public Folder addFolderToCurrentParent(
             String name,
@@ -316,14 +322,10 @@ public class MainSystem {
         currentParent.sortChildren(new TypeComparator());
     }
 
-    //TODO: check permission, move back to parent
-    //TODO: recursive permission check
-    //TODO: check if item or folder
-    //TODO: accurate exceptions
     /**
      * delete the current container
-     *
-     * @throws Exception;
+     * and delete all children recursively
+     * @throws Exception
      */
     public void deleteCurrent() throws Exception {
         Folder parent = currentParent.delete(account);

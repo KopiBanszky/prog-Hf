@@ -6,7 +6,9 @@ import java.io.*;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Account implements Serializable {
     private String name;
@@ -20,12 +22,18 @@ public class Account implements Serializable {
         return name;
     }
 
-    // @param name
-    // @param password
-    // @throws Exception if the account does not exist
-    // @throws Exception if the password is incorrect
-    // @description logs in the user with the given name and password
+    /**
+     * @param name;
+     * @param pasw - password;
+     * @throws Exception if the account does not exist
+     * @throws Exception if the password is incorrect
+     * logs in the user with the given name and password
+     */
     public void login(String name, String pasw) throws Exception{
+
+        if(this.name != null) {
+            throw new Exception("Account is already logged in");
+        }
 
         ArrayList<Account> accounts = getAllAccounts();
 
@@ -33,22 +41,33 @@ public class Account implements Serializable {
             throw new Exception("Account does not exist");
         }
 
-        Account account = accounts.stream()
-                .filter(a -> a.validatePassword(pasw) && a.name.equals(name)).findFirst().get();
+        Account account = null;
+        for(Account a : accounts) {
+            if(a.getName().equals(name) && a.validatePassword(pasw)) {
+                account = a;
+                break;
+            }
+        }
+        if(account == null) {
+            throw new Exception("Password is incorrect");
+        }
 
 
         this.name = account.name;
         this.id = account.id;
         this.hash = account.hash;
+        this.salt = account.salt;
 
     };
 
-    // @param name
-    // @param password
-    // @throws Exception if the account already exists
-    // @throws Exception if the account creation fails
-    // @throws Exception if name or password is not long enough (min 4 characters)
-    // @description creates a new account with the given name and password, if successful, it saves to file
+    /**
+     * @param name
+     * @param password
+     * @throws Exception if the account already exists
+     * @throws Exception if the account creation fails
+     * @throws Exception if name or password is not long enough (min 4 characters)
+     * creates a new account with the given name and password, if successful, it saves to file
+     */
     public void createAccount(String name, String password) throws Exception{
         if(name.length() < 4 || password.length() < 4) {
             throw new Exception("Name or password is too short");
@@ -73,16 +92,10 @@ public class Account implements Serializable {
     };
 
 
-    //TODO: getFromFile by id
-    public static Account getAccount(int id) {
-        return new Account();
-    }
-
-    //TODO: getFromFile by name
-    private void getFromFile() throws Exception {};
-
-    // @return all accounts from file
-    // @throws Exception if the read fails
+    /**
+     * @return all accounts from file
+     * @throws Exception if the read fails
+     */
     public static ArrayList<Account> getAllAccounts() throws Exception {
 
         File file = new File(FileNames.FOLDER + "/" + FileNames.ACCOUNT);
@@ -97,23 +110,29 @@ public class Account implements Serializable {
         return results;
     }
 
-    // @param accounts
-    // @throws Exception if the save fails
-    // @description saves the given accounts to file
+    /**
+     * @throws Exception if the save fails
+     * saves the current account to file
+     */
     public void saveToFile() throws Exception {
         saveToFile(this);
     };
 
-    // @param account
-    // @throws Exception if the account is not initialized
-    // @throws Exception if the save fails
-    // @description saves the given account to file
+    /**
+     * @param account
+     * @throws Exception if the account is not initialized
+     * @throws Exception if the save fails
+     * saves the given account to file
+     */
     public static void saveToFile(Account account) throws Exception {
         if(account.name == null) {
             throw new Exception("Account is not initialized");
         }
 
         ArrayList<Account> allAccounts = getAllAccounts();
+        if(account.isIn((new HashSet<Account>(allAccounts)))) {
+            allAccounts.removeIf(a -> a.equals(account));
+        }
         allAccounts.add(account);
 
         File file = new File(FileNames.FOLDER + "/" + FileNames.ACCOUNT);
@@ -126,7 +145,6 @@ public class Account implements Serializable {
     /**
      * set file to accountlist
      * @param account
-     * @return
      */
     public static void saveToFile(ArrayList<Account> account) throws Exception {
         File file = new File(FileNames.FOLDER + "/" + FileNames.ACCOUNT);
@@ -138,8 +156,10 @@ public class Account implements Serializable {
 
     //endregion
 
-    // @param password
-    // @return the hash of the password
+    /**
+     * @param password
+     * @return the hash of the password
+     */
     private String getHash(String password)  {
         salt = createSalt(4);
         String saltedPassword = salt + password;
@@ -155,8 +175,10 @@ public class Account implements Serializable {
         return null;
     }
 
-    // @param password
-    // @return true if the password is correct
+    /**
+     * @param password
+     * @return true if the password is correct
+     */
     private boolean validatePassword(String password) {
         String saltedPassword = salt + password;
         try {
@@ -171,6 +193,10 @@ public class Account implements Serializable {
         return false;
     }
 
+    /**
+     * @param length
+     * @return a random string of the given length
+     */
     private String createSalt(int len) {
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         StringBuilder salt = new StringBuilder();

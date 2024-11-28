@@ -53,8 +53,6 @@ public abstract class Container implements Serializable {
         return permissions;
     }
 
-    //TODO: add to file
-    //TODO: check permissions
     public void addPermission(Account account, Permission permission) throws Exception {
         permissions.put(account, permission);
     }
@@ -161,6 +159,7 @@ public abstract class Container implements Serializable {
      */
     public static Folder getFullDataFromFile() throws Exception {
         try {
+            //System.out.println(FileNames.FILE);
             File file = new File(FileNames.FOLDER + "/" + FileNames.FILE);
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream( file ));
             Folder results = (Folder) ois.readObject();

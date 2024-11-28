@@ -18,7 +18,8 @@ public enum Icons {
     BACK("back"),
     NULL("null"),
     SAVE("save"),
-    PLUS("plus");
+    PLUS("plus"),
+    MANUAL("manual");
 
     private final String name;
 

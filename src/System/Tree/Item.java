@@ -104,7 +104,7 @@ public class Item extends Container {
      * if the account does not have permission, it will throw an exception
      * @param account;
      * @return the text
-     * @throws Exception;
+     * @throws Exception
      */
     public String getText(Account account) throws Exception {
         if(!account.isIn(permissions.keySet())) {
@@ -118,7 +118,7 @@ public class Item extends Container {
      * if the account does not have permission, it will throw an exception
      * @param text;
      * @param account;
-     * @throws Exception;
+     * @throws Exception
      */
     public void setText(String text, Account account) throws Exception {
         if(getPermission(account).getValue() < 2) {
@@ -159,7 +159,7 @@ public class Item extends Container {
      * if the account does not have permission, it will throw an exception
      * it will save to the file
      * @param imgs absolute paths
-     * @throws Exception;
+     * @throws Exception
      */
     public void setImgs(ArrayList<String> imgs, Account account) throws Exception {
         if(getPermission(account).getValue() < 2) {
@@ -215,7 +215,7 @@ public class Item extends Container {
      * it will remove the file
      * @param img name;
      * @param account;
-     * @throws Exception;
+     * @throws Exception
      */
     public void removeImg(String img, Account account) throws Exception{
         if(getPermission(account).getValue() < 2) {
@@ -231,7 +231,7 @@ public class Item extends Container {
      * if the account does not have permission, it will throw an exception
      * it will remove the files
      * @param account;
-     * @throws Exception;
+     * @throws Exception
      */
     public void removeImgs(Account account) throws Exception {
         if(getPermission(account).getValue() < 2) {

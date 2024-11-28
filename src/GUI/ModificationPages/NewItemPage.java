@@ -49,7 +49,6 @@ public class NewItemPage {
             return null;
         }
 
-        //TODO: display accurate to permissions
 //region header
         header.setLayout(new BorderLayout());
         header.setBackground(Color.BLACK);

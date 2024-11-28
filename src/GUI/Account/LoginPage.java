@@ -1,6 +1,9 @@
 package GUI.Account;
 
 import GUI.MainPage;
+import GUI.Utilities.Docs;
+import GUI.Utilities.IconButton;
+import GUI.Utilities.Icons;
 import GUI.Utilities.Utility;
 import System.Account;
 import System.MainSystem;
@@ -11,6 +14,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 
 public class LoginPage {
     private MainPage mainPage;
@@ -23,6 +28,7 @@ public class LoginPage {
         mainPage.setTitle("Prog3 Leltár - Bejelentkezés");
         JPanel panel = builder();
 
+
         mainPage.build(panel);
     }
 
@@ -30,6 +36,7 @@ public class LoginPage {
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
+
         panel.setBackground(Utility.BG_COLOR);
 
         JPanel center = new JPanel();
@@ -86,6 +93,8 @@ public class LoginPage {
         gbc.weighty = 1;
 
         panel.add(center, gbc);
+
+        panel.add(new Docs());
 
         return panel;
     }

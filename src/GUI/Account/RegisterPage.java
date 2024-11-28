@@ -1,6 +1,7 @@
 package GUI.Account;
 
 import GUI.MainPage;
+import GUI.Utilities.Docs;
 import GUI.Utilities.Utility;
 import System.Account;
 import System.MainSystem;
@@ -97,6 +98,7 @@ public class RegisterPage {
         gbc.weighty = 1;
 
         panel.add(center, gbc);
+        panel.add(new Docs());
 
         return panel;
     }

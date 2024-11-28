@@ -217,7 +217,6 @@ public class ItemPage {
         return body;
     }
 
-    //TODO: implement
     private JPanel imgBuilder() {
         JPanel img = new JPanel();
         JPanel panel = new JPanel();

@@ -56,6 +56,7 @@ public class Folder extends Container {
      * @param permissions
      * @param account
      * @throws Exception
+     * @return the new folder
      */
     public Folder newFolder(String name, ArrayList<Container> allContainers, HashMap<Account, Permission> permissions, Account account) throws Exception{
         HashMap<Account, Permission> permissions_n = (HashMap<Account, Permission>) permissions.clone();
@@ -106,13 +107,12 @@ public class Folder extends Container {
         children.sort(comparator);
     }
 
-    //TODO: error catch, permission
     /**
      * Remove a child from the folder
      * if the account does not have permission, it will throw an exception
      * @param child;
      * @param account;
-     * @throws Exception;
+     * @throws Exception
      */
     public void removeChild(Item child, Account account) throws Exception {
         if(!account.isIn(child.getPermissions().keySet())) {
@@ -135,13 +135,12 @@ public class Folder extends Container {
         saveFullDataToFile(this);
     }
 
-    //TODO: error catch, permission
     /**
      * Delete all children recursively, wont remove the containers from the file
      * if the account does not have permission, it will throw an exception
      * @param account;
      * @return the parent of the folder
-     * @throws Exception;
+     * @throws Exception
      */
     public Folder delete(Account account) throws Exception {
         if(!isPermissionGrantedInTree(account, Permission.EDIT)) {
@@ -171,7 +170,6 @@ public class Folder extends Container {
         return parent;
     }
 
-    //TODO: error catch, permission
     /**
      * Check if the account has all permissions in the tree
      * @param account;
